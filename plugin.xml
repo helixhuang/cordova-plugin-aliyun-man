@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-aliyun-man" version="2.1.8">
+    <name>Aliyun MAN Cordova Plugin</name>
+    <description>Aliyun MAN Cordova Plugin</description>
+    <author>Helix Huang</author>
+    <keywords>Aliyun,MAN</keywords>
+    <license>Apache 2.0 License</license>
+    <repo>https://github.com/helixhuang/cordova-plugin-aliyun-man.git</repo>
+    <issue>https://github.com/helixhuang/cordova-plugin-aliyun-man/issues</issue>
+
+    <preference name="APP_KEY"/>
+    <preference name="APP_SECRET"/>
+
+    <engines>
+        <engine name="cordova" version=">=3.0"/>
+    </engines>
+
+    <js-module src="www/aliyunman.js" name="aliyunman">
+        <clobbers target="aliyunman"/>
+    </js-module>
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.READ_SETTINGS" />
+            <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data android:name="com.alibaba.app.appkey" android:value="$API_KEY" />
+            <meta-data android:name="com.alibaba.app.appsecret" android:value="$APP_SECRET" />
+        </config-file>
+        <source-file src="src/android/libs/alicloud-android-sdk-man-1.1.4.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/alisdk-ut-5.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/utdid4all-1.0.4.jar" target-dir="libs"/>
+        <source-file src="src/android/AliyunMan.java" target-dir="src/com/cecoco/cordova/aliyunman" />
+    </platform>
+
+</plugin>
