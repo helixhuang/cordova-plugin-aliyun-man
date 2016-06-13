@@ -15,7 +15,7 @@
         <engine name="cordova" version=">=3.0"/>
     </engines>
 
-    <js-module src="www/aliyunman.js" name="aliyunman">
+    <js-module src="www/aliyunman.js" name="AliyunMan">
         <clobbers target="aliyunman"/>
     </js-module>
     <platform name="android">
@@ -30,7 +30,7 @@
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <meta-data android:name="com.alibaba.app.appkey" android:value="$API_KEY" />
+            <meta-data android:name="com.alibaba.app.appkey" android:value="$APP_KEY" />
             <meta-data android:name="com.alibaba.app.appsecret" android:value="$APP_SECRET" />
         </config-file>
         <source-file src="src/android/libs/alicloud-android-sdk-man-1.1.4.jar" target-dir="libs"/>

@@ -1,12 +1,9 @@
-var AliyunMan = function(){
+var aliyunman = {
+    initialize: function (successCallback, params) {
+        cordova.exec(successCallback, successCallback, "AliyunMan", "initialize", [params]);
+    },
+    updateUserAccount: function (successCallback, params) {
+        cordova.exec(successCallback, successCallback, "AliyunMan", "updateUserAccount", [params]);
+    }
 };
-
-if(!window.plugins) {
-    window.plugins = {};
-}
-
-if(!window.plugins.aliyunman) {
-    window.plugins.aliyunman = new AliyunMan();
-}
-
-module.exports = new AliyunMan();
+module.exports = aliyunman;
