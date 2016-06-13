@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-aliyun-man",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Aliyun MAN for cordova plugin",
   "cordova": {
     "id": "cordova-plugin-aliyun-man",

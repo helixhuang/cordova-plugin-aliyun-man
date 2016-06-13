@@ -1,4 +1,4 @@
-package com.cecoco.cordova.aliyunman;
+package com.cecoco.cordova;
 
 import android.app.Activity;
 
@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AliyunMan extends CordovaPlugin {
+
   public AliyunMan() {
   }
 
