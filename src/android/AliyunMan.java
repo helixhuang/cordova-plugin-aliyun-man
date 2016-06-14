@@ -2,6 +2,8 @@ package com.cecoco.cordova;
 
 import android.app.Activity;
 
+import com.alibaba.sdk.android.man.MANHitBuilders;
+import com.alibaba.sdk.android.man.MANPageHitBuilder;
 import com.alibaba.sdk.android.man.MANService;
 import com.alibaba.sdk.android.man.MANServiceProvider;
 
@@ -28,6 +30,12 @@ public class AliyunMan extends CordovaPlugin {
       initializeAction(args, callbackContext);
     } else if ("updateUserAccount".equals(action)) {
       updateUserAccountAction(args, callbackContext);
+    } else if ("userRegister".equals(action)) {
+      userRegisterAction(args, callbackContext);
+    } else if ("pageHit".equals(action)) {
+      pageHitAction(args, callbackContext);
+    } else if ("customHit".equals(action)) {
+      customHitAction(args, callbackContext);
     } else {
       return false;
     }
@@ -35,39 +43,117 @@ public class AliyunMan extends CordovaPlugin {
   }
 
   private void initializeAction(JSONArray args, CallbackContext callbackContext) {
-    JSONObject returnObj = new JSONObject();
     JSONObject obj = getArgsObject(args);
-    Activity activity = cordova.getActivity();
-    MANService manService = MANServiceProvider.getService();
-    if (obj != null && obj.optBoolean("debug", false)) {
-      manService.getMANAnalytics().turnOnDebug();
+    try {
+      Activity activity = cordova.getActivity();
+      MANService manService = MANServiceProvider.getService();
+      if (obj != null && obj.optBoolean("debug", false)) {
+        manService.getMANAnalytics().turnOnDebug();
+      }
+      manService.getMANAnalytics().init(activity.getApplication(), activity.getApplicationContext());
+      if (obj != null && !obj.optBoolean("crashHandler", true)) {
+        manService.getMANAnalytics().turnOffCrashHandler();
+      }
+      if (obj != null && !obj.optBoolean("autoPageTrack", false)) {
+        manService.getMANAnalytics().turnOffAutoPageTrack();
+      }
+      callbackContext.success("initialized");
+    } catch (Exception ex) {
+      callbackContext.error(ex.getMessage());
     }
-    manService.getMANAnalytics().init(activity.getApplication(), activity.getApplicationContext());
-    if (obj != null && !obj.optBoolean("crashHandler", true)) {
-      manService.getMANAnalytics().turnOffCrashHandler();
-    }
-    if (obj != null && !obj.optBoolean("autoPageTrack", false)) {
-      manService.getMANAnalytics().turnOffAutoPageTrack();
-    }
-    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, returnObj);
-    pluginResult.setKeepCallback(true);
-    callbackContext.sendPluginResult(pluginResult);
   }
 
   private void updateUserAccountAction(JSONArray args, CallbackContext callbackContext) {
-    JSONObject returnObj = new JSONObject();
     JSONObject obj = getArgsObject(args);
-    Activity activity = cordova.getActivity();
-    MANService manService = MANServiceProvider.getService();
+    if (obj==null) {
+      callbackContext.error("null input");
+      return;
+    }
+    try{
+      MANService manService = MANServiceProvider.getService();
+      String userName = obj.optString("userName","");
+      String userId = obj.optString("userId","");
+      manService.getMANAnalytics().updateUserAccount(userName, userId);
+      callbackContext.success("updated");
+    } catch (Exception ex) {
+      callbackContext.error(ex.getMessage());
+    }
+  }
 
-    String userName = obj.optString("userName","");
-    String userId = obj.optString("userId","");
+  private void userRegisterAction(JSONArray args, CallbackContext callbackContext) {
+    JSONObject obj = getArgsObject(args);
+    if (obj==null) {
+      callbackContext.error("null input");
+      return;
+    }
+    try{
+      MANService manService = MANServiceProvider.getService();
+      String userName = obj.optString("userName","");
+      manService.getMANAnalytics().userRegister(userName);
+      callbackContext.success("updated");
+    } catch (Exception ex) {
+      callbackContext.error(ex.getMessage());
+    }
+  }
 
-    manService.getMANAnalytics().updateUserAccount(userName, userId);
+  private void pageHitAction(JSONArray args, CallbackContext callbackContext) {
+    JSONObject obj = getArgsObject(args);
+    if (obj==null) {
+      callbackContext.error("null input");
+      return;
+    }
+    try{
+      String pageName = obj.optString("pageName","");
+      String referPageName = obj.optString("referPageName","");
+      int duration = obj.getInt("duration");
+      JSONObject properties = obj.getJSONObject("properties");
+      MANPageHitBuilder hitBuilder = new MANPageHitBuilder(pageName);
+      hitBuilder.setDurationOnPage(duration);
+      hitBuilder.setReferPage(referPageName);
+      if (properties!=null){
+        while (properties.keys().hasNext()){
+          String key = properties.keys().next();
+          String value = properties.getString(key);
+          hitBuilder.setProperty(key, value);
+        }
+      }
+      MANService manService = MANServiceProvider.getService();
+      manService.getMANAnalytics().getDefaultTracker().send(hitBuilder.build());
+      callbackContext.success("sent");
+    } catch (Exception ex) {
+      callbackContext.error(ex.getMessage());
+    }
+  }
 
-    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, returnObj);
-    pluginResult.setKeepCallback(true);
-    callbackContext.sendPluginResult(pluginResult);
+  private void customHitAction(JSONArray args, CallbackContext callbackContext) {
+    JSONObject obj = getArgsObject(args);
+    if (obj==null) {
+      callbackContext.error("null input");
+      return;
+    }
+    try{
+      String eventLabel = obj.optString("eventLabel","");
+      String eventPage = obj.optString("eventPage","");
+      int duration = obj.getInt("duration");
+      JSONObject properties = obj.getJSONObject("properties");
+
+      MANHitBuilders.MANCustomHitBuilder hitBuilder = new MANHitBuilders.MANCustomHitBuilder(eventLabel);
+      hitBuilder.setDurationOnEvent(duration);
+      hitBuilder.setEventPage(eventPage);
+      if (properties!=null){
+        while (properties.keys().hasNext()){
+          String key = properties.keys().next();
+          String value = properties.getString(key);
+          hitBuilder.setProperty(key, value);
+        }
+      }
+
+      MANService manService = MANServiceProvider.getService();
+      manService.getMANAnalytics().getDefaultTracker().send(hitBuilder.build());
+      callbackContext.success("sent");
+    } catch (Exception ex) {
+      callbackContext.error(ex.getMessage());
+    }
   }
 
 
