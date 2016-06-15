@@ -106,15 +106,19 @@ public class AliyunMan extends CordovaPlugin {
       String pageName = obj.optString("pageName","");
       String referPageName = obj.optString("referPageName","");
       int duration = obj.getInt("duration");
-      JSONObject properties = obj.getJSONObject("properties");
+
       MANPageHitBuilder hitBuilder = new MANPageHitBuilder(pageName);
       hitBuilder.setDurationOnPage(duration);
       hitBuilder.setReferPage(referPageName);
-      if (properties!=null){
-        while (properties.keys().hasNext()){
-          String key = properties.keys().next();
-          String value = properties.getString(key);
-          hitBuilder.setProperty(key, value);
+
+      if (obj.has("properties")){
+        JSONObject properties = obj.getJSONObject("properties");
+        if (properties!=null){
+          while (properties.keys().hasNext()){
+            String key = properties.keys().next();
+            String value = properties.getString(key);
+            hitBuilder.setProperty(key, value);
+          }
         }
       }
       MANService manService = MANServiceProvider.getService();
@@ -135,19 +139,21 @@ public class AliyunMan extends CordovaPlugin {
       String eventLabel = obj.optString("eventLabel","");
       String eventPage = obj.optString("eventPage","");
       int duration = obj.getInt("duration");
-      JSONObject properties = obj.getJSONObject("properties");
 
       MANHitBuilders.MANCustomHitBuilder hitBuilder = new MANHitBuilders.MANCustomHitBuilder(eventLabel);
       hitBuilder.setDurationOnEvent(duration);
       hitBuilder.setEventPage(eventPage);
-      if (properties!=null){
-        while (properties.keys().hasNext()){
-          String key = properties.keys().next();
-          String value = properties.getString(key);
-          hitBuilder.setProperty(key, value);
+
+      if (obj.has("properties")) {
+        JSONObject properties = obj.getJSONObject("properties");
+        if (properties != null) {
+          while (properties.keys().hasNext()) {
+            String key = properties.keys().next();
+            String value = properties.getString(key);
+            hitBuilder.setProperty(key, value);
+          }
         }
       }
-
       MANService manService = MANServiceProvider.getService();
       manService.getMANAnalytics().getDefaultTracker().send(hitBuilder.build());
       callbackContext.success("sent");
