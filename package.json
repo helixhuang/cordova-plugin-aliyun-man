@@ -1,11 +1,12 @@
 {
   "name": "cordova-plugin-aliyun-man",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Aliyun MAN for cordova plugin",
   "cordova": {
     "id": "cordova-plugin-aliyun-man",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   },
   "repository": {
