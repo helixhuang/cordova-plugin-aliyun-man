@@ -1,6 +1,6 @@
 #import <Cordova/CDV.h>
 
-@interface AppVersion : CDVPlugin
+@interface AliyunMan : CDVPlugin
 
 - (void)initialize:(CDVInvokedUrlCommand*)command;
 
