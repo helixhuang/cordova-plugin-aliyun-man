@@ -1,4 +1,6 @@
 #  Cordova Plugin for Aliyun Mobile Analytics(MAN) (Not Official)
+
+[![Join the chat at https://gitter.im/helixhuang/cordova-plugin-aliyun-man](https://badges.gitter.im/helixhuang/cordova-plugin-aliyun-man.svg)](https://gitter.im/helixhuang/cordova-plugin-aliyun-man?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 This plugin allows you to use Aliyun Mobile Analytics(MAN) on Android, iOS.
 
 Read more from Aliyun site [here](https://help.aliyun.com/product/9005959_30019.html?spm=5176.750001.2.35.S4zt6o)
