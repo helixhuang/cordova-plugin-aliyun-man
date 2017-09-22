@@ -47,17 +47,35 @@ public class AliyunMan extends CordovaPlugin {
     try {
       Activity activity = cordova.getActivity();
       MANService manService = MANServiceProvider.getService();
+
       if (obj != null && obj.optBoolean("debug", false)) {
         manService.getMANAnalytics().turnOnDebug();
       }
       manService.getMANAnalytics().init(activity.getApplication(), activity.getApplicationContext());
-      if (obj != null && !obj.optBoolean("crashHandler", true)) {
-        manService.getMANAnalytics().turnOffCrashHandler();
+
+
+      if (obj != null && !obj.optBoolean("crashReporter", true)) {
+        manService.getMANAnalytics().turnOffCrashReporter();
       }
       if (obj != null && !obj.optBoolean("autoPageTrack", false)) {
         manService.getMANAnalytics().turnOffAutoPageTrack();
       }
-      callbackContext.success("initialized");
+      /******
+      * Start custom code
+      */
+      if( obj != null ) {
+        String version = obj.optString("version", null);
+        String channel = obj.optString("channel", null);
+        if(channel != null) {
+            manService.getMANAnalytics().setChannel(channel);
+        }
+        if(version != null) {
+            manService.getMANAnalytics().setAppVersion(version);
+        }
+      }
+      /* END of custom code
+      */
+			  callbackContext.success("initialized");
     } catch (Exception ex) {
       callbackContext.error(ex.getMessage());
     }

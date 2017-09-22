@@ -34,6 +34,7 @@
         <framework src="SystemConfiguration.framework" weak="true" />
         <framework src="CoreTelephony.framework" weak="true" />
         <framework src="libz.tbd" weak="true" />
+        <framework src="libsqlite3.tbd" weak="true" />
         <framework src="libresolv.tbd" weak="true" />
 
         <resource-file src="src/ios/MANConfig.plist" />
@@ -66,7 +67,11 @@
         </config-file>
         <source-file src="src/android/libs/alicloud-android-sdk-man-1.1.8.jar" target-dir="libs"/>
         <source-file src="src/android/libs/alicloud-android-ut-5.1.0.jar" target-dir="libs"/>
-        <source-file src="src/android/libs/utdid4all-1.1.5.3.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/utdid4all-1.1.5.3_proguard.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/jniLibs/armeabi/libMotu.so" target-dir="libs/armebi"/>
+        <source-file src="src/android/libs/jniLibs/armeabi-v7a/libMotu.so" target-dir="libs/armebi-v7a"/>
+        <source-file src="src/android/libs/jniLibs/x86/libMotu.so" target-dir="libs/x86"/>
+
         <source-file src="src/android/AliyunMan.java" target-dir="src/com/cecoco/cordova" />
     </platform>
 

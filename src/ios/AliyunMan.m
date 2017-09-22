@@ -24,9 +24,18 @@
         [man turnOffCrashHandler];
     }
 
+    NSString * version = [self getStringValue:obj :@"version"];
+    if ( ![version == (id)[NSNull null] || version.length == 0] ) {
+        [man setAppVersion:version];
+    }
+
+    NSString * channel = [self getStringValue:obj :@"channel"];
+    if ( ![channel == (id)[NSNull null] || channel.length == 0] ) {
+      [man setChannel:channel];
+    }
+
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"initialized"];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-
 }
 
 - (void)updateUserAccount:(CDVInvokedUrlCommand*)command
