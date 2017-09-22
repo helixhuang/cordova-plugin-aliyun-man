@@ -25,12 +25,13 @@
     }
 
     NSString * version = [self getStringValue:obj :@"version"];
-    if ( ![version == (id)[NSNull null] || version.length == 0] ) {
+    if ( ![version isEqual: [NSNull null]] ) {
         [man setAppVersion:version];
     }
 
+
     NSString * channel = [self getStringValue:obj :@"channel"];
-    if ( ![channel == (id)[NSNull null] || channel.length == 0] ) {
+    if ( ![channel isEqual: [NSNull null]] ) {
       [man setChannel:channel];
     }
 
