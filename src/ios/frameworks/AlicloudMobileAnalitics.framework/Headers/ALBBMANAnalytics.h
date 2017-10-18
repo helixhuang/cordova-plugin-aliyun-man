@@ -18,8 +18,6 @@
 
 - (void)initWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey;
 
-- (void)initWithAppKey:(NSString *)appKey;
-
 - (void)turnOnDebug;
 
 - (void)setAppVersion:(NSString *) pAppVersion;
@@ -31,12 +29,6 @@
 - (void)userRegister:(NSString *) pUsernick;
 
 - (ALBBMANTracker *)getDefaultTracker;
-
-- (ALBBMANTracker *)getTracker:(NSString *)  pTrackId;
-
-- (void)setRequestAuthentication:(id<ALBBMANIRequestAuthentication> ) pRequestAuth;
-
-- (void)setCrashCaughtListener:(id<ALBBMANICrashCaughtListener>)aListener;
 
 - (void)turnOffCrashHandler;
 

@@ -11,7 +11,7 @@
 
 @interface ALBBMANTracker : UTTracker
 
--(id) initWithTrackId:(NSString *) pTrackId;
+- (id) initWithAppKey:(NSString *)appKey;
 
 -(void) setGlobalProperty:(NSString *) pKey value:(NSString *) pValue;
 

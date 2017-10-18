@@ -24,9 +24,19 @@
         [man turnOffCrashHandler];
     }
 
+    NSString * version = [self getStringValue:obj :@"version"];
+    if ( ![version isEqual: [NSNull null]] ) {
+        [man setAppVersion:version];
+    }
+
+
+    NSString * channel = [self getStringValue:obj :@"channel"];
+    if ( ![channel isEqual: [NSNull null]] ) {
+      [man setChannel:channel];
+    }
+
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"initialized"];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-
 }
 
 - (void)updateUserAccount:(CDVInvokedUrlCommand*)command
